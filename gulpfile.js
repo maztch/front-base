@@ -44,12 +44,6 @@ function swallowError(error) {
     this.emit('end');
 }
 
-gulp.task('browser-sync', function() {});
-
-gulp.task('bs-reload', function() {
-    browserSync.reload();
-});
-
 /* SCSS */
 gulp.task('sass', function() {
     return gulp.src(sassFiles.input)
@@ -58,7 +52,7 @@ gulp.task('sass', function() {
         .pipe(autoprefixer(autoprefixerOptions))
         .pipe(sourcemaps.write('maps'))
         .pipe(gulp.dest(sassFiles.output))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(browserSync.stream({match: '**/*.css'}));
 });
 
 //gulp.task('sass-watch',['sass'],browserSync.reload);
@@ -66,11 +60,11 @@ gulp.task('sass-watch', ['sass']);
 
 
 /* images */
-gulp.task('images', () =>
+gulp.task('images', function() {
     gulp.src('src/img/**/*')
         .pipe(imagemin())
-        .pipe(gulp.dest('dist/img'))
-);
+        .pipe(gulp.dest('dist/img'));
+});
 
 
 /* Twig Templates */
@@ -89,7 +83,7 @@ function getJsonData(file, cb) {
 }
 
 gulp.task('twig', function() {
-    return gulp.src('src/templates/urls/**/*')
+    return gulp.src('src/templates/pages/**/*')
         .pipe(plumber({
             errorHandler: function(error) {
                 console.log(error.message);
@@ -127,16 +121,15 @@ gulp.task('scripts-watch', ['scripts'], browserSync.reload);
 /* Build */
 gulp.task('build', ['scripts', 'twig', 'images', 'sass']);
 
-gulp.task('serve', ['build', 'browser-sync'], function() {
-
+gulp.task('serve', ['build'], function() {
 
     browserSync.init({
-        server: {
-            baseDir: 'dist/'
-        }
+        server: './dist'
     });
 
     gulp.watch("src/scss/**/*.scss", ['sass-watch']);
     gulp.watch("src/js/**/*.js", ['scripts-watch']);
     gulp.watch(['src/templates/**/*', 'src/data/*.json'], ['twig-watch']);
+
+    gulp.watch("dist/**/*.html").on('change', browserSync.reload);
 });

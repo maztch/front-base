@@ -3,4 +3,4 @@ npm-debug.log
 *.min.css
 *.min.js
 src/_compiled.json
-compiled/*
+dist/
