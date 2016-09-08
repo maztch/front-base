@@ -39,7 +39,7 @@ This folder can contain any number of valid json files. These will be made avail
 
 ### SCSS Folder
 
-The target file will be the top-level all.less. This can @include any other files you wish to use.
+The target file will be the top-level .scss files. This can @include any other files you wish to use.
 
 ### Js Folder
 
