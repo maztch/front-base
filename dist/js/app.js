@@ -1,1 +1,0 @@
-console.log("library js"),console.log("custom js");
