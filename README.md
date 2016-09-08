@@ -53,5 +53,6 @@ Each sub-task is available via gulp if you wish to run them independently. They 
 * **twig** - Compiles all json data files, and then compiles all twig templates
 * **sass** - Compiles LESS files
 * **scripts** - Compiles all scripts
-* **build** - Compiles all assets in the correct order (less, scripts, twig). Useful if you're using this recipe without BrowserSync
+* **build** - Compiles all assets in the correct order (scss, scripts, twig). Useful if you're using this recipe without BrowserSync
 * **serve** - Compiles all assets, launches BrowserSync and then watches files for changes
+* **images** - Optimize and compress images and svg assets
